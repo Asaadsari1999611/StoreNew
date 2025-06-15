@@ -1,0 +1,152 @@
+﻿
+@{
+    ViewData["Title"] = "category";
+}
+
+
+@*start check type user customer or gust*@
+@{
+    string typeuser = "";
+    if (@ViewBag.typecategory == 0)
+        typeuser = "Gust";
+    else
+        typeuser = "Customer";
+
+}
+@*end check type user customer or gust*@
+
+
+
+@*start change layout*@
+@if (typeuser == "Customer")
+{
+    Layout = "~/Views/Shared/_HomeLoginLayout1.cshtml";
+
+}
+else if (typeuser == "Gust")
+{
+    Layout = "~/Views/Shared/_HomeLayout1.cshtml";
+
+}
+@*end change layout*@
+
+
+
+<p class="titl"><span>C</span>ategory</p>
+<br />
+<br />
+@ViewBag.state 
+<!-- category section -->
+<div class="all">
+    @foreach (var item in Model)
+    {
+        <div class="cards">
+            <div class="images">
+                <img src=@Url.Content("~/images/"+item.Imagepath)
+                     asp-append-version="true" />
+            </div>
+            <div class="names">
+                <div class="name">@item.Gategoryname</div>
+            </div>
+
+            <div class="product">
+                <a asp-action="product" asp-controller="Home" asp-route-id="@item.Id">
+                    see product
+                    <i class="fa fa-long-arrow-right" aria-hidden="true"></i>
+                </a>
+            </div>
+        </div>
+    }
+
+
+
+</div>
+
+
+<style>
+    p.titl {
+        text-align: center;
+        font-size: 35px;
+        margin-top: 20px;
+    }
+
+    span {
+        color: #ffbe33;
+    }
+
+    .all {
+        display: grid;
+        grid-template-columns: auto auto auto auto;
+        justify-content: space-evenly;
+    }
+
+    .cards {
+        margin: 25px 0px;
+        background-color: #222831db;
+        border-radius: 15px;
+        text-align: center;
+        height: 295px;
+        width: 250px;
+    }
+
+        .cards:hover {
+            cursor: pointer;
+        }
+
+            .cards:hover .images {
+                padding: 0px;
+            }
+
+            .cards:hover .name {
+                color: white;
+                border-bottom: 1px solid #ffbe33;
+            }
+
+            .cards:hover a {
+                left: 140px;
+                color: #ffbe33;
+            }
+
+    .images {
+        width: 100%;
+        border-radius: 15px;
+        padding: 2.5%;
+        transition: 0.5s;
+        height: 190px;
+    }
+
+        .images img {
+            width: 100%;
+            height: 100%;
+            border-radius: 15px;
+        }
+
+    .names {
+        margin-top: 15px;
+        width: 100%;
+        text-align: center;
+        display: flex;
+        justify-content: center;
+    }
+
+    .name {
+        font-size: 25px;
+        color: #ffffffa8;
+        width: fit-content;
+    }
+
+    .product {
+        position: relative;
+        width: 100%;
+        background-color: green;
+    }
+
+        .product a {
+            position: absolute;
+            left: 0px;
+            top: 10px;
+            transition: 0.5s;
+            color: transparent;
+        }
+
+</style>

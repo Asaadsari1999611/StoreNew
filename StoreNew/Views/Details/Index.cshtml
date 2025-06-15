@@ -1,0 +1,140 @@
+﻿@model IEnumerable<StoreNew.Models.Detail>
+
+@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Views/Shared/_DashpordLayout.cshtml";
+}
+
+
+<h3 style="margin-left:40%;font-size:25px"><span class="titl">D</span>etails</h3>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+<p>
+    <a asp-action="Create"><i class="fa fa-user-plus" aria-hidden="true" style="font-size:25px;color:black;margin-left:20px;"></i></a>
+</p>
+
+<div class="container">
+    @foreach (var item in Model)
+    {
+
+        <div class="subcontainer">
+            <div class="product">@item.Product.Name</div>
+            <div class="detail">
+                <div class="details">
+                    <b>id</b>  : @item.Id
+                </div>
+                <div class="details">
+                    <b>Launch</b>   : @item.Launch
+                </div>
+                <div class="details">
+                    <b>Dimensions</b>  : @item.Dimensions
+                </div>
+                <div class="details">
+                    <b>Weight</b>   : @item.Weight
+                </div>
+                <div class="details">
+                    <b>Typee</b>   : @item.Typee
+                </div>
+                <div class="details">
+                    <b>Sizee</b>   : @item.Sizee
+                </div>
+                <div class="details">
+                    <b>Os</b>   : @item.Os
+                </div>
+
+                <div class="details">
+                    <b>Memoryy</b>  : @item.Memoryy
+                </div>
+                <div class="details">
+                    <b>Maincamera</b>   : @item.Maincamera
+                </div>
+                <div class="details">
+                    <b>Selfecamera</b>   : @item.Selfecamera
+                </div>
+                <div class="details">
+                    <b>Battery</b>   : @item.Battery
+                </div>
+              
+            </div>
+            <div class="link">
+                <a class="mang" asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
+                <a class="mang" asp-action="Details" asp-route-id="@item.Id">Details</a> |
+                <a class="mang" asp-action="Delete" asp-route-id="@item.Id">Delete</a>
+            </div>
+        </div>
+    }
+
+</div>
+
+
+<style>
+
+    .container {
+        display: flex;
+        width: 100%;
+        flex-wrap: wrap;
+        gap: 30px;
+        padding-top: 25px;
+    }
+
+    .subcontainer {
+        box-sizing: border-box;
+        flex: 1 1 calc(33.333%-30px);
+        border: 3px solid silver;
+        padding: 10px;
+        justify-content: center;
+        max-width: 30%;
+        border-radius: 10px;
+    }
+
+    .product {
+        font-size: 20px;
+        color: #ffbe33;
+        margin-bottom: 10px;
+        text-align: center;
+        font-weight: bold;
+    }
+
+    .link {
+        text-align: center;
+        margin-top: 15px;
+    }
+
+    .detail {
+        display: flex;
+        width: 100%;
+        flex-wrap: wrap;
+        gap: 3px;
+    }
+
+    .details {
+        flex: 1 1 45%;
+        width: 100%;
+        flex-wrap: wrap;
+        gap: 3px;
+        max-width: 50%;
+    }
+
+    span.titl {
+        color: #ffbe33 !important;
+        font-size: 30px;
+        padding-left:15px;
+    }
+
+    a.mang {
+        text-decoration: none;
+        font-weight: bold;
+        background-color: #ffbe33;
+        color: white;
+        padding: 2px;
+    }
+
+        a.mang:hover {
+            text-decoration: none;
+            font-weight: bold;
+            background-color: black;
+            color: #ffbe33;
+            padding: 2px;
+        }
+
+
+</style>

@@ -1,0 +1,51 @@
+﻿@model StoreNew.Models.FeedbackStore
+
+@{
+    ViewData["Title"] = "Edit";
+}
+
+<h1>Edit</h1>
+
+<h4>FeedbackStore</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="Edit">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <input type="hidden" asp-for="Id" />
+            <div class="form-group">
+                <label asp-for="Ratingsatars" class="control-label"></label>
+                <input asp-for="Ratingsatars" class="form-control" />
+                <span asp-validation-for="Ratingsatars" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Ratingdetails" class="control-label"></label>
+                <input asp-for="Ratingdetails" class="form-control" />
+                <span asp-validation-for="Ratingdetails" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Productid" class="control-label"></label>
+                <select asp-for="Productid" class="form-control" asp-items="ViewBag.Productid"></select>
+                <span asp-validation-for="Productid" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Userid" class="control-label"></label>
+                <select asp-for="Userid" class="form-control" asp-items="ViewBag.Userid"></select>
+                <span asp-validation-for="Userid" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Shared" class="control-label"></label>
+                <input asp-for="Shared" class="form-control" />
+                <span asp-validation-for="Shared" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Save" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-action="Index">Back to List</a>
+</div>
+

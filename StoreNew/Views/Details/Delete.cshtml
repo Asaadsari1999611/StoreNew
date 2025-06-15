@@ -1,0 +1,88 @@
+﻿@model StoreNew.Models.Detail
+
+@{
+    ViewData["Title"] = "Delete";
+    Layout = "~/Views/Shared/_DashpordLayout.cshtml";
+}
+
+<h1>Delete</h1>
+
+<h3>Are you sure you want to delete this?</h3>
+<div>
+    <h4>Detail</h4>
+    <hr />
+    <dl class="row">
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.Launch)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.Launch)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.Dimensions)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.Dimensions)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.Weight)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.Weight)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.Typee)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.Typee)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.Sizee)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.Sizee)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.Os)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.Os)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.Memoryy)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.Memoryy)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.Maincamera)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.Maincamera)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.Selfecamera)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.Selfecamera)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.Battery)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.Battery)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.Product)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.Product.Id)
+        </dd>
+    </dl>
+    
+    <form asp-action="Delete">
+        <input type="hidden" asp-for="Id" />
+        <input type="submit" value="Delete" class="btn btn-danger" /> |
+        <a asp-action="Index">Back to List</a>
+    </form>
+</div>

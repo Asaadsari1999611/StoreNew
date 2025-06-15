@@ -1,0 +1,113 @@
+﻿@{
+    ViewData["Title"] = "contactreverse";
+    Layout = "~/Views/Shared/_DashpordLayout.cshtml";
+}
+
+
+
+<h2 style="text-align:center;margin-top:40px;margin-bottom:30px;"><span>I</span>npox <span>M</span>essage</h2>
+<div style="display:flex;justify-content:center;margin-bottom:50px;">
+    <table border="2">
+        <thead>
+        <th>Id</th>
+        <th>Name</th>
+        <th>message</th>
+        <th>Send-date</th>
+        <th>vision</th>
+        </thead>
+        <tbody>
+            @foreach (var inpox in Model)
+            {
+                <tr>
+
+                    <td>@inpox.Userid</td>
+                    @foreach (var user in @ViewBag.user)
+                    {
+                        if (inpox.Userid == user.Id)
+                        {
+                            <td>@user.Fname @user.Lname</td>
+                        }
+
+                    }
+                    <td>@inpox.Message</td>
+                    <td>@inpox.Senddate</td>
+                    @if (inpox.Visiondate == null)
+                    {
+                        <td style="background-color:red;max-width:70px;"><a class="shared" asp-action="vision" asp-controller="Home" asp-route-idmessage="@inpox.Id">vision</a></td>
+                    }
+                    @if (inpox.Visiondate != null)
+                    {
+                        <td style="background-color:green;max-width:70px; "><a class="shared">vision</a></td>
+                    }
+                    <td style="background-color:#ffbe33;max-width:70px;"><a class="shared" asp-action="replay" asp-controller="Home" asp-route-idmessage="@inpox.Id">reply</a></td>
+                </tr>
+            }
+
+        </tbody>
+    </table>
+</div>
+<hr />
+<h2 style="text-align:center;margin-top:40px;margin-bottom:30px;"><span>O</span>utgoing <span>M</span>essage</h2>
+<div style="display:flex;justify-content:center;margin-bottom:50px;">
+    <table border="2">
+        <thead>
+        <th>To Customer</th>
+        <th>message</th>
+        <th>Send-date</th>
+
+        </thead>
+        <tbody>
+            @foreach (var outgoing in @ViewBag.outgoing)
+            {
+                <tr>
+
+                    <td>@outgoing.Username</td>
+                    <td>@outgoing.Message</td>
+                    <td>@outgoing.Senddate</td>
+                </tr>
+            }
+
+        </tbody>
+    </table>
+</div>
+
+<style>
+    span {
+        color: #ffbe33;
+    }
+
+    table {
+        width: 750px;
+        text-align: center;
+    }
+
+    a.shared {
+        color: white;
+        font-size: 23px;
+        text-decoration: none;
+    }
+
+    form input.text {
+        width: 450px;
+        border-radius: 7px;
+        height: 50px;
+        font-size: 20px;
+        background-color: silver;
+        padding: 5px;
+    }
+
+    input.send {
+        margin-top: 15px;
+        width: 75px;
+        height: 50px;
+        background-color: #ffbe33;
+        color: white;
+        border-radius: 7px;
+        font-size: 21px;
+    }
+
+        input.send:hover {
+            background-color: black;
+            color: #ffbe33;
+        }
+</style>

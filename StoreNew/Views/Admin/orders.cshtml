@@ -1,0 +1,156 @@
+﻿@model IEnumerable<StoreNew.Models.Shopingcart>
+@{
+    ViewData["Title"] = "orders";
+    Layout = "~/Views/Shared/_DashpordLayout.cshtml";
+}
+
+<h1 style="text-align:center;margin-top:40px;margin-bottom:30px;"><span>O</span>rders</h1>
+<div style="display:flex;justify-content:center;margin-bottom:100px;">
+    <table border="2" style="text-align:center;width:900px">
+        <thead>
+        <th> Order</th>
+        <th> Customer</th>
+        <th> TotalAmount</th>
+        <th> OrderDate</th>
+        <th> DateArrive</th>
+        <th> State</th>
+        <th> Change</th>
+
+        </thead>
+        <tbody>
+            @{
+                int count = 0;
+            }
+
+            @foreach (var order in @Model)
+            {
+                // foreach (var pay in @ViewBag.payments)
+                // {
+                //  if (order.Id == pay.Shopingcartid)
+                // {
+
+                count++;
+
+                <tr>
+                    <td>@count</td>
+                    @foreach(var customer in ViewBag.user)
+                    {
+                        if(customer.Id==order.Userid)
+                        {
+                            <td>@customer.Fname  @customer.Lname</td>
+
+                        }
+                    }
+                    <td>@order.Totalamount $</td>
+                    <td>@order.Orderdate</td>
+                    <td>@order.Datearrive</td>
+                    @{
+                        switch (order.Orderstate)
+                        {
+                            case "Loading Items":
+                                <td style="color:red;font-weight:bold;"> @order.Orderstate </td>
+                                <td >
+                                   
+                                </td>
+                                break;
+                            case "In Preparation":
+                                <td style="color:orange;font-weight:bold;"> @order.Orderstate </td>
+                                <td style="background-color:#f8e407;font-weight:bold; ">
+                                    <a asp-action="change" asp-controller="Admin" asp-route-orderid="@order.Id" asp-route-currentstate="@order.Orderstate">On The Road </a>
+                                </td>
+                                break;
+                            case "On The Road":
+                                <td style="color:#f8e407;font-weight:bold;"> @order.Orderstate </td>
+                                <td style="background-color:green;font-weight:bold;">
+                                    <a asp-action="change" asp-controller="Admin" asp-route-orderid="@order.Id" asp-route-currentstate="@order.Orderstate">Arrive </a>
+                                </td>
+                                break;
+                            case "Arrive":
+                                <td style="color:green;font-weight:bold;"> @order.Orderstate </td>
+                                <td>
+                                </td>
+                                break;
+                        }
+                    }
+                    
+                    <td class="Items" style="">
+                        <a asp-action="iteminorders" asp-route-id="@order.Id">Items</a>
+                    </td>
+                </tr>
+                // }
+
+
+                // }
+            }
+
+
+        </tbody>
+    </table>
+
+</div>
+
+<style>
+    span {
+        color: #ffbe33;
+    }
+
+    a {
+        color: white;
+    }
+
+        a:hover {
+            color: white;
+        }
+
+    td.Items {
+        background-color: #ffbe33;
+        color: white;
+        font-weight: bold;
+    }
+
+        td.Items:hover {
+            background-color: black;
+            color: #ffbe33;
+            font-weight: bold;
+            cursor: pointer;
+        }
+
+    td.delete {
+        background-color: #ff0000a3;
+        font-weight: bold;
+        color: white;
+        height: 10px;
+    }
+
+        td.delete:hover {
+            background-color: #b30f0f;
+            color: white;
+            cursor: pointer;
+        }
+
+    th.payment {
+        background-color: #ffbe33;
+        font-weight: bold;
+        color: white;
+    }
+
+        th.payment:hover {
+            background-color: green;
+            color: white;
+            cursor: pointer;
+        }
+
+    th.cansel {
+        background-color: #ffbe33;
+        font-weight: bold;
+        color: white;
+    }
+
+        th.cansel:hover {
+            background-color: red;
+            color: white;
+            cursor: pointer;
+        }
+</style>
+
+

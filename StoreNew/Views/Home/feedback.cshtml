@@ -1,0 +1,165 @@
+﻿@model IEnumerable<FeedbackStore>
+@{
+    ViewData["Title"] = "feedback";
+    Layout = "~/Views/Shared/_HomeLoginLayout1.cshtml";
+}
+<div style="position:relative;">
+    Rating this Site : @ViewBag.ratingsite /5  <i style="color:#ffbe33;" class="fa fa-star" aria-hidden="true"></i>
+
+</div>
+<h1 style="text-align:center;margin-top:40px;margin-bottom:30px;"><span>W</span>rite <span>F</span>eedback</h1>
+<div style="width:100%;text-align:center;">
+    <form method="post" style="margin-bottom:50px;">
+        <input type="hidden" name="iduser" value="@ViewBag.userid" />
+        <input id="rating" class="rating" type="hidden" name="rating" min="1" max="5" step="1" placeholder="Stars" />
+        <span onclick="rating(1);">
+            <i id="one" class="fa fa-star" aria-hidden="true"></i>
+            </i>
+        </span>
+        <span onclick="rating(2);">
+            <i id="two" class="fa fa-star" aria-hidden="true"></i>
+            </i>
+        </span>
+        <span onclick="rating(3);">
+            <i id="three" class="fa fa-star" aria-hidden="true"></i>
+        </span>
+        <span onclick="rating(4);">
+            <i id="four" class="fa fa-star" aria-hidden="true"></i>
+        </span>
+        <span onclick="rating(5);" style="margin-right:15px;">
+            <i id="five" class="fa fa-star" aria-hidden="true"></i>
+        </span>
+        <input class="text" type="text" name="message" />
+        <br />
+        <input class="send" type="submit" value="Send" />
+
+    </form>
+</div>
+
+<hr />
+<h2 style="text-align:center;margin-top:40px;margin-bottom:30px;"><span>F</span>eedbacks</h2>
+<div style="display:flex;justify-content:center;margin-bottom:50px;">
+    <table border="2">
+        <thead>
+        <th>message</th>
+        <th>Rating</th>
+        <th>Shared</th>
+        </thead>
+        <tbody>
+            @foreach (var feed in Model)
+            {
+                <tr>
+                    <td>@feed.Ratingdetails</td>
+                    <td>
+                        @feed.Ratingsatars /5  <i style="color:#ffbe33;" class="fa fa-star" aria-hidden="true"></i>
+
+
+
+                    </td>
+                    @if (@feed.Shared == "of")
+                    {
+                        <td class="of">@feed.Shared</td>
+                    }
+                    @if (@feed.Shared == "on")
+                    {
+                        <td class="on">@feed.Shared</td>
+                    }
+
+                </tr>
+            }
+
+        </tbody>
+    </table>
+</div>
+<script>
+
+    function rating(rat) {
+        document.getElementById('rating').value = rat;
+        if (rat == 1) {
+            document.getElementById('one').style.color = "#ffbe33";
+            document.getElementById('two').style.color = "black";
+            document.getElementById('three').style.color = "black";
+            document.getElementById('four').style.color = "black";
+            document.getElementById('five').style.color = "black";
+
+        }
+        if (rat == 2) {
+            document.getElementById('one').style.color = "#ffbe33";
+            document.getElementById('two').style.color = "#ffbe33";
+            document.getElementById('three').style.color = "black";
+            document.getElementById('four').style.color = "black";
+            document.getElementById('five').style.color = "black";
+        }
+        if (rat == 3) {
+            document.getElementById('one').style.color = "#ffbe33";
+            document.getElementById('two').style.color = "#ffbe33";
+            document.getElementById('three').style.color = "#ffbe33";
+            document.getElementById('four').style.color = "black";
+            document.getElementById('five').style.color = "black";
+        }
+        if (rat == 4) {
+            document.getElementById('one').style.color = "#ffbe33";
+            document.getElementById('two').style.color = "#ffbe33";
+            document.getElementById('three').style.color = "#ffbe33";
+            document.getElementById('four').style.color = "#ffbe33";
+            document.getElementById('five').style.color = "black";
+
+        }
+        if (rat == 5) {
+            document.getElementById('one').style.color = "#ffbe33";
+            document.getElementById('two').style.color = "#ffbe33";
+            document.getElementById('three').style.color = "#ffbe33";
+            document.getElementById('four').style.color = "#ffbe33";
+            document.getElementById('five').style.color = "#ffbe33";
+
+        }
+    }
+</script>
+<style>
+    span {
+        color: #ffbe33;
+    }
+
+    table {
+        width: 450px;
+        text-align: center;
+    }
+
+    td.of {
+        color: red;
+    }
+
+    td.on {
+        color: green;
+    }
+
+    form input.text {
+        width: 450px;
+        border-radius: 7px;
+        height: 50px;
+        font-size: 20px;
+        background-color: silver;
+        padding: 5px;
+    }
+
+    input.send {
+        margin-top: 15px;
+        width: 75px;
+        height: 50px;
+        background-color: #ffbe33;
+        color: white;
+        border-radius: 7px;
+        font-size: 21px;
+    }
+
+        input.send:hover {
+            background-color: black;
+            color: #ffbe33;
+        }
+
+    i.fa-star {
+        color: black;
+        font-size: 23px;
+        cursor: pointer;
+    }
+</style>

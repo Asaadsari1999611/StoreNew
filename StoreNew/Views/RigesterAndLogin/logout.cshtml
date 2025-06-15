@@ -1,0 +1,17 @@
+﻿@model User;
+@{
+    ViewData["Title"] = "logout";
+    Layout = "~/Views/Shared/_HomeLoginLayout1.cshtml";
+}
+
+
+<div style="text-align:center;margin-top:100px;margin-bottom:200px">
+    <h3>@*@Model.Fname , *@Are you sure you want to log out ?</h3>
+
+    <form asp-action="logout">
+        <input type="hidden" asp-for="Id" />
+        <input type="submit" value="Log out" class="btn btn-danger" style="margin-bottom:20px; background-color:#e8a10a;width:100px; border:none" /><br />
+        <a href="~/Home/Index" style="color:#e8a10a;font-weight:bold;">Back to Home</a>
+    </form>
+</div>
+

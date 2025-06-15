@@ -1,0 +1,39 @@
+﻿@model UserLogin
+@{
+	ViewData["Title"] = "Login";
+	Layout = "~/Views/Shared/_HomeLayout1.cshtml";
+}
+
+<section class="ftco-section" style="margin-top:-80px">
+	<div class="container">
+
+		<div class="row justify-content-center">
+			<div class="col-md-7 col-lg-5">
+				<div class="login-wrap">
+					<div class="img" style="background-image: url(images/bg.jpg);"></div>
+					<h3 class="text-center mb-4">Log in</h3>
+					@if (ViewBag.error != null)
+					{
+						<h5 style="background-color:red;color:white;width:fit-content;margin-left:30%;border-radius:10px;">@ViewBag.error</h5>
+
+					}
+					<form class="signup-form" enctype="multipart/form-data" method="POST">
+						<div class="form-group mb-3">
+							<input asp-for="Username"  type="text" class="form-control" placeholder="UserName">
+						</div>
+						<div class="form-group mb-3">
+							<input asp-for="Password" type="text" class="form-control" placeholder="Password">
+						</div>
+
+
+						<div class="form-group">
+							<button type="submit" class="form-control btn btn-primary submit px-3">Continue</button>
+						</div>
+					</form>
+					<p>Forget password<a asp-action="forgetbyemail" style="color:#9d6b00f5;padding-left:5px;">Forget</a></p>
+					<p>I dont have account<a asp-action="Rigester" style="color:#9d6b00f5;padding-left:5px;">Register</a></p>
+				</div>
+			</div>
+		</div>
+	</div>
+</section>

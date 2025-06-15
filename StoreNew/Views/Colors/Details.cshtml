@@ -1,0 +1,39 @@
+﻿@model StoreNew.Models.Color
+
+@{
+    ViewData["Title"] = "Details";
+    Layout = "~/Views/Shared/_DashpordLayout.cshtml";
+}
+
+<h1>Details</h1>
+
+<div>
+    <h4>Color</h4>
+    <hr />
+    <dl class="row">
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.Namecolors)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.Namecolors)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.Imagepath)
+        </dt>
+        <dd class = "col-sm-10">
+            <img src=@Url.Content("~/images/"+Model.Imagepath)
+                 asp-append-version="true"
+                 style="border-radius:20%;" widh="100px" height="100px" />
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.Product)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.Product.Id)
+        </dd>
+    </dl>
+</div>
+<div>
+    <a asp-action="Edit" asp-route-id="@Model?.Id" asp-route-productid="@ViewBag.prpductid">Edit</a> |
+    <a asp-controller="Admin" asp-action="Colorproduct" asp-route-id="@ViewBag.prpductid">Back to List</a>
+</div>

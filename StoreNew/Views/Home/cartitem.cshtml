@@ -1,0 +1,147 @@
+﻿@model IEnumerable<CartProduct>
+@{
+    ViewData["Title"] = "cartitem";
+    Layout = "~/Views/Shared/_HomeLoginLayout1.cshtml";
+}
+
+
+<h1 style="text-align:center;margin-top:40px;margin-bottom:30px;"><span>M</span>y <span>C</span>art</h1>
+<div style="display:flex;justify-content:center;margin-bottom:100px;">
+    @ViewBag.state
+    <table border="2" style="text-align:center;width:900px">
+        <thead>
+        <th> name</th>
+        <th> Price</th>
+        <th> Discount</th>
+        <th> Count</th>
+        <th> Final price</th>
+
+
+        <th>image</th>
+        <th></th>
+        </thead>
+        <tbody>
+            @{
+                var orderfound = Model.Count();
+            }
+            @foreach (var item in @Model)
+            {
+                <tr>
+                    @foreach (var product in ViewBag.products)
+                    {
+                        if (product.Id == item.Productid)
+                        {
+                            <td>@product.Name</td>
+                            <td>@product.Price $</td>
+                            <td>@product.Sale %</td>
+
+                        }
+
+                    }
+                    <td>@item.Quantity</td>
+                    @foreach (var product in ViewBag.products)
+                    {
+                        if (product.Id == item.Productid)
+                        {
+                            decimal finalprice = Convert.ToDecimal(((double)@product.Price - ((double)product.Price * ((double)product.Sale * 0.01))) * (double)@item.Quantity);
+                            <td style="color: #ffbe33;">@finalprice $</td>
+                        }
+
+                    }
+
+                    @foreach (var product in ViewBag.products)
+                    {
+                        if (product.Id == item.Productid)
+                        {
+                            <td>
+
+                                <img src=@Url.Content("~/images/"+product.Imagepath)
+                                     asp-append-version="true"
+                                     style="border-radius:20%;" widh="100px" height="100px" />
+                            </td>
+
+
+                        }
+
+                    }
+                    <td class="delete">
+                        <a asp-action="deletefromcartitem" asp-controller="home" asp-route-id="@item.Id">Delete</a>
+                    </td>
+                </tr>
+
+            }
+            @if (orderfound > 0)
+            {
+                <tr style="height:50px">
+                    <th colspan="3">
+                        Total price &emsp;&emsp;:&emsp;&emsp; <span>@ViewBag.totalprice &emsp; $</span>
+                    </th>
+                    <th style="color:white;background-color:green;">
+                        <a asp-action="print" asp-controller="Home">print</a>
+                    </th>
+                    <th class="cansel">
+                        <a asp-action="canselcartitem" asp-controller="Home" asp-route-id="@ViewBag.order">Cansel</a>
+
+                    </th>
+                    <th class="payment" colspan="2">
+                        <a class="payment" asp-action="payment" asp-controller="Home">Payment</a>
+                    </th>
+                </tr>
+            }
+
+        </tbody>
+    </table>
+
+</div>
+
+<style>
+    span {
+        color: #ffbe33;
+    }
+
+    a {
+        color: white;
+    }
+
+        a:hover {
+            color: white;
+        }
+
+    td.delete {
+        background-color: #ff0000a3;
+        font-weight: bold;
+        color: white;
+        height: 10px;
+    }
+
+        td.delete:hover {
+            background-color: #b30f0f;
+            color: white;
+            cursor: pointer;
+        }
+
+    th.payment {
+        background-color: #ffbe33;
+        font-weight: bold;
+        color: white;
+    }
+
+        th.payment:hover {
+            background-color: green;
+            color: white;
+            cursor: pointer;
+        }
+
+    th.cansel {
+        background-color: #ffbe33;
+        font-weight: bold;
+        color: white;
+    }
+
+        th.cansel:hover {
+            background-color: red;
+            color: white;
+            cursor: pointer;
+        }
+</style>
+

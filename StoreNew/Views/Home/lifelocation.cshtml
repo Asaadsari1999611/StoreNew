@@ -1,0 +1,102 @@
+﻿
+@{
+    ViewData["Title"] = "lifelocation";
+    Layout = "~/Views/Shared/_HomeLoginLayout1.cshtml";
+}
+
+<!-- Leaflet CSS & JS -->
+<head>
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+</head>
+<body>
+    <div id="map" style="height: 500px;"></div>
+</body>
+<script>
+    //calc Distance between driver and client
+   
+    function calculateDistanceInMeters(lat1, lon1, lat2, lon2) {
+        const R = 6371e3; // نصف قطر الأرض بالمتر
+        const φ1 = lat1 * Math.PI / 180;
+        const φ2 = lat2 * Math.PI / 180;
+        const Δφ = (lat2 - lat1) * Math.PI / 180;
+        const Δλ = (lon2 - lon1) * Math.PI / 180;
+
+        const a = Math.sin(Δφ / 2) * Math.sin(Δφ / 2) +
+            Math.cos(φ1) * Math.cos(φ2) *
+            Math.sin(Δλ / 2) * Math.sin(Δλ / 2);
+
+        const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
+
+        const distance = R * c;
+        return distance; // بالمتر
+    }
+    // نقاط ثابتة (store, client)
+    const storeLocation = [32.530177, 35.845628]; // مثال: عمّان، غيّرها لموقع متجرك
+    const clientLocation = [32.5171107, 35.8693806];     // مثال: موقع منزل العميل، يفضل تحميلها من السيرفر
+
+    let map = L.map('map').setView(storeLocation, 13);
+
+    // إضافة خريطة الخلفية
+    L.tileLayer('https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png', {
+        attribution: '&copy; OpenStreetMap contributors &copy; CARTO'
+    }).addTo(map);
+    // إضافة marker للمتجر
+    L.marker(storeLocation).addTo(map)
+        .bindPopup("📦 موقع المتجر").openPopup();
+
+    // إضافة marker للعميل
+    L.marker(clientLocation).addTo(map)
+        .bindPopup("🏠 منزل العميل");
+
+    // Marker للسائق
+    let driverMarker = null;
+  let c=0;
+
+    // تتبع موقع السائق الحي
+    function trackDriver() {
+        if (navigator.geolocation) {
+           
+            navigator.geolocation.watchPosition(function (position) {
+            
+                
+                c++;
+
+                const lat = position.coords.latitude;
+                const lng = position.coords.longitude;
+                var distancebetweendriverandclient = calculateDistanceInMeters(lat, lng, 32.5171107, 35.8693806);
+                console.log("📍 تحديث جديد - الموقع:", lat, lng);
+                console.log("🎯 دقة:", position.coords.accuracy);
+                console.log("count = " + c);
+                if (!driverMarker) {
+                    driverMarker = L.marker([lat, lng])
+                        .addTo(map)
+                        .bindPopup(`🚗 موقع السائق<br>الدقة: ${position.coords.accuracy} متر<br> البعد عن العميل :${distancebetweendriverandclient}`).openPopup();
+                    map.setView([lat, lng], 13); // تحريك الخريطة لموقع السائق الجديد
+                   
+                } else {
+                    driverMarker.setLatLng([lat, lng]);
+                }
+                map.setView([lat, lng], map.getZoom());
+
+            }, function (error) {
+                console.error("خطأ في تحديد موقع السائق:", error.message);
+            }
+                , {
+                    enableHighAccuracy: true, // ✅ مهم
+                    maximumAge: 0,
+                    timeout: 5000
+                });
+        } else {
+            alert("متصفحك لا يدعم تحديد الموقع.");
+        }
+        navigator.geolocation.getCurrentPosition(function (pos) {
+            console.log("دقة الموقع (بالأمتار): " + pos.coords.accuracy);
+            console.log("إحداثياتك: " + pos.coords.latitude + ", " + pos.coords.longitude);
+            console.log("count = "+ c);
+        });
+    }
+    trackDriver();
+    // بدء تتبع السائق (يمكنك تفعيله بزر أو تلقائياً)
+   
+</script>

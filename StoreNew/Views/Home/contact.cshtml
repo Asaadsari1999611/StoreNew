@@ -1,0 +1,119 @@
+﻿@model IEnumerable<Contact>
+@{
+    ViewData["Title"] = "contact";
+    Layout = "~/Views/Shared/_HomeLoginLayout1.cshtml";
+}
+
+
+
+
+<!--
+<form action="https://formsubmit.co/ramezaswad986@gmail.com" method="POST">
+    <input style="background-color:red" type="text" name="name" required>
+    <input style="background-color:red" type="email" name="email" required>
+    <button style="background-color:red" type="submit">Send</button>
+</form>
+<-->
+
+
+<h1 style="text-align:center;margin-top:40px;margin-bottom:30px;"><span>S</span>end <span>M</span>essage</h1>
+<div style="width:100%;text-align:center;">
+    <form method="post" style="margin-bottom:50px;">
+
+        <input type="hidden" name="iduser" value="@ViewBag.userid" />
+
+        <input class="text" type="text" name="message" />
+        <br />
+        <input class="send" type="submit" value="Send" />
+
+    </form>
+</div>
+
+<hr />
+<h2 style="text-align:center;margin-top:40px;margin-bottom:30px;"><span>O</span>utgoing <span>M</span>essage</h2>
+<div style="display:flex;justify-content:center;margin-bottom:50px;">
+    <table border="2">
+        <thead>
+        <th>message</th>
+        <th>Send-date</th>
+        <th>vision-date</th>
+        </thead>
+        <tbody>
+            @foreach (var outgoing in Model)
+            {
+                <tr>
+                    <td>@outgoing.Message</td>
+                    <td>@outgoing.Senddate</td>
+                    <td>@outgoing.Visiondate</td>
+
+                </tr>
+            }
+
+        </tbody>
+    </table>
+</div>
+<hr />
+<h2 style="text-align:center;margin-top:40px;margin-bottom:30px;"><span>I</span>npox <span>M</span>essage</h2>
+<div style="display:flex;justify-content:center;margin-bottom:50px;">
+    <table border="2">
+        <thead>
+        <th>message</th>
+        <th>Send-date</th>
+
+        </thead>
+        <tbody>
+            @foreach (var inpox in @ViewBag.inpox)
+            {
+                <tr>
+                    <td>@inpox.Message</td>
+                    <td>@inpox.Senddate</td>
+
+
+                </tr>
+            }
+
+        </tbody>
+    </table>
+</div>
+<style>
+    span {
+        color: #ffbe33;
+    }
+
+    table {
+        width: 750px;
+        text-align: center;
+    }
+
+    td.of {
+        color: red;
+    }
+
+    td.on {
+        color: green;
+    }
+
+    form input.text {
+        width: 450px;
+        border-radius: 7px;
+        height: 50px;
+        font-size: 20px;
+        background-color: silver;
+        padding: 5px;
+    }
+
+    input.send {
+        margin-top: 15px;
+        width: 75px;
+        height: 50px;
+        background-color: #ffbe33;
+        color: white;
+        border-radius: 7px;
+        font-size: 21px;
+    }
+
+        input.send:hover {
+            background-color: black;
+            color: #ffbe33;
+        }
+</style>

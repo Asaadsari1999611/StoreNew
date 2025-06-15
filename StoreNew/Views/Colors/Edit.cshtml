@@ -1,0 +1,42 @@
+﻿@model StoreNew.Models.Color
+
+@{
+    ViewData["Title"] = "Edit";
+    Layout = "~/Views/Shared/_DashpordLayout.cshtml";
+}
+
+<h1>Edit</h1>
+
+<h4>Color</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form enctype="multipart/form-data" asp-action="Edit">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <input type="hidden" asp-for="Id" />
+            <div class="form-group">
+                <label asp-for="Namecolors" class="control-label"></label>
+                <input asp-for="Namecolors" class="form-control" />
+                <span asp-validation-for="Namecolors" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Imagefile" class="control-label"></label>
+                <input asp-for="Imagefile" type="file" class="form-control" />
+                <span asp-validation-for="Imagefile" class="text-danger" ></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Productid" class="control-label"></label>
+                <select asp-for="Productid" class="form-control" asp-items="ViewBag.productname"></select>
+                <span asp-validation-for="Productid" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Save" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-controller="Admin" asp-action="Colorproduct" asp-route-id="@ViewBag.idproduct">Back to List</a>
+</div>
+

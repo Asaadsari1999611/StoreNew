@@ -1,0 +1,147 @@
+﻿@model IEnumerable<StoreNew.Models.FeedbackStore>
+
+@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Views/Shared/_DashpordLayout.cshtml";
+}
+
+<h2 style="text-align:center;margin-top:40px;margin-bottom:30px;"><span class="titl">F</span>eedbacks </h2>
+
+<table border="2" width="900px">
+    <thead>
+        <tr>
+
+            <th>
+                Feedback
+            </th>
+            @*<th>
+            @Html.DisplayNameFor(model => model.ProductId)
+            </th>*@
+            <th>
+                @* @Html.DisplayNameFor(model => model.User)*@
+                Customer id
+            </th>
+            <th>
+                @* @Html.DisplayNameFor(model => model.User)*@
+                Customer Name
+            </th>
+            <th></th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+
+                <td>
+                    @Html.DisplayFor(modelItem => item.Ratingdetails)
+                </td>
+                @*<td>
+            @Html.DisplayFor(modelItem => item.ProductId)
+            </td>*@
+                <td>
+                    @Html.DisplayFor(modelItem => item.User.Id)
+                </td>
+                <td>
+                    @foreach (var item1 in ViewBag.customers)
+                    {
+                        if (item1.Id == item.User.Id)
+                        {
+                            @Html.DisplayFor(modelItem => item.User.Fname)
+
+                        }
+                    }
+                </td>
+
+                @if (item.Shared == "of")
+                {
+
+                    <td style="background-color:red;text-align:center;">
+                        <a class="shared" asp-action="shared" asp-controller="Home" asp-route-id="@item.Id">Shared</a>
+                    </td>
+                }
+                @if (item.Shared == "on")
+                {
+
+                    <td style="background-color:green;text-align:center;">
+                        <a class="shared" asp-action="shared" asp-route-id="@item.Id">Shared</a>
+                    </td>
+                }
+
+                <td>
+                    <a class="mang" asp-action="Details" asp-route-id="@item.Id">Details</a> |
+                    <a class="mang" asp-action="Delete" asp-route-id="@item.Id">Delete</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+
+<style>
+
+    a.shared {
+        color: white;
+        font-size: 23px;
+        text-decoration: none;
+    }
+
+    div.dt-buttons {
+        margin-top: 25px;
+        margin-bottom: 20px;
+    }
+
+        div.dt-buttons button {
+            background-color: #ffbe33;
+            color: white;
+            font-weight: bold;
+        }
+
+    span.titl {
+        color: #ffbe33 !important;
+    }
+
+    div.dt-buttons button:hover {
+        background-color: black !important;
+        color: #ffbe33 !important;
+        font-weight: bold;
+    }
+
+    .buttn.dt-button {
+        background-color: #ffbe33;
+    }
+
+    a.mang {
+        text-decoration: none;
+        font-weight: bold;
+        background-color: #ffbe33;
+        color: white;
+        padding: 2px;
+    }
+
+        a.mang:hover {
+            text-decoration: none;
+            font-weight: bold;
+            background-color: black;
+            color: #ffbe33;
+            padding: 2px;
+        }
+
+
+    h1 {
+        margin-bottom: 20px;
+    }
+
+
+    button.btn {
+        background-color: #ffbe33 !important;
+        border: none !important;
+    }
+
+        button.btn:hover {
+            background-color: black !important;
+            color: #ffbe33 !important;
+        }
+
+</style>

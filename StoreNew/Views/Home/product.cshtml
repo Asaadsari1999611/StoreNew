@@ -1,0 +1,450 @@
+﻿
+@{
+    ViewData["Title"] = "product";
+}
+
+@*start check type user customer or gust*@
+@{
+    string typeuser = "";
+    if (@ViewBag.typecategory == 0)
+        typeuser = "Gust";
+    else
+        typeuser = "Customer";
+
+}
+@*end check type user customer or gust*@
+
+
+
+@*start change layout*@
+@if (typeuser == "Customer")
+{
+    Layout = "~/Views/Shared/_HomeLoginLayout1.cshtml";
+
+}
+else if (typeuser == "Gust")
+{
+    Layout = "~/Views/Shared/_HomeLayout1.cshtml";
+
+}
+@*end change layout*@
+
+
+
+
+<p class="titl"><span>P</span>roduct</p>
+<br />
+<br />
+
+<!-- category section -->
+<div class="all">
+    @foreach (var item in Model)
+    {
+        <div class="cards">
+            <div class="images">
+                <img src=@Url.Content("~/images/"+item.Imagepath)
+                     asp-append-version="true" />
+            </div>
+            <div class="names">
+                <div class="name">@item.Name</div>
+            </div>
+            <div class="bay">
+                <div class="price">
+                    <p>@item.Price  $</p>
+                </div>
+
+                @if (@ViewBag.iduser != null)
+                {
+                    <div class="cart">
+                        <a asp-action="cart" asp-controller="Home" asp-route-idproduct="@item.Id">
+                            <i class="fa fa-cart-plus" aria-hidden="true"></i>
+                        </a>
+                    </div>
+                }
+                else
+                {
+                    <div class="cart">
+                        <a asp-action="cart" asp-controller="Home" asp-route-idproduct="@item.Id">
+                            <i class="fa fa-cart-plus" aria-hidden="true" style="display:none"></i>
+                        </a>
+                    </div>
+                }
+
+                <div class="price">
+                    <p class="sale">@item.Sale % </p>
+                    @{
+                        double priceaftersale = (double)item.Price - ((double)item.Price * ((double)item.Sale * 0.01));
+                    }
+                    <p class="priceaftersale">@priceaftersale  $</p>
+                </div>
+                <!--
+                <div class="number">
+                 <input type="number" >
+                </div>
+                -->
+
+
+            </div>
+            <div class="color">
+                <a class="colors" asp-action="colors" asp-controller="Home" asp-route-id="@item.Id">
+                    see colors
+                    <i class="fa fa-long-arrow-right" aria-hidden="true"></i>
+                </a>
+            </div>
+            <div class="product">
+                <a class="detail" asp-action="details" asp-controller="Home" asp-route-id="@item.Id">
+                    see details
+                    <i class="fa fa-long-arrow-right" aria-hidden="true"></i>
+                </a>
+            </div>
+            <div class="status">
+                <p>
+                    @if (item.Status == "valiable")
+                    {
+                    <p>valiable</p>
+                    }
+                    @if (item.Status == "empty ")
+                    {
+                    <p>not valiable now</p>
+                    }
+                    @if (item.Status == "must be recharged")
+                    {
+                        for (int i = 0; i < 10; i++)
+                        {
+                            if (Convert.ToInt32(item.Stochquntity) == i)
+                            {
+                            <p>only @i items remain</p>
+                            }
+                        }
+                    }
+
+                </p>
+            </div>
+            <div class="feedbacks">
+                @{
+                    decimal count = 0;
+                    decimal sum = 0;
+                    decimal result = 0;
+                    foreach (var rat in @ViewBag.feedbcks)
+                    {
+                        if (rat.ProductId == item.Id)
+                        {
+                            count++;
+                            sum += rat.RatingSatars;
+                        }
+                    }
+                    if (count != 0)
+                        result = sum / count;
+                    else result = 0;
+                }
+                <p>@result/<span>5</span><br>  <i class="fa fa-star" aria-hidden="true" style="color:#ffbe33;font-size:20px;"></i></p>
+            </div>
+            @if (typeuser == "Customer")
+            {
+                <div class="writefeedback">
+                    <p>
+                        <a class="write" asp-action="feedbackproduct" asp-controller="Home" asp-route-id="@item.Id">Write</a>
+                    </p>
+                </div>
+                <div class="seefeedback">
+                    <p>
+                        <a class="write" asp-action="seefeedbackproduct" asp-controller="Home" asp-route-id="@item.Id">See</a>
+                    </p>
+                </div>
+            }
+
+        </div>
+    }
+
+
+
+</div>
+
+
+<style>
+    p.titl {
+        text-align: center;
+        font-size: 35px;
+        margin-top: 20px;
+    }
+
+    span {
+        color: #ffbe33;
+    }
+
+    .all {
+        display: grid;
+        grid-template-columns: auto auto auto auto;
+        justify-content: space-evenly;
+    }
+
+    .cards {
+        margin: 25px 0px;
+        background-color: #222831db;
+        border-radius: 15px;
+        text-align: center;
+        height: 365px;
+        width: 250px;
+    }
+
+        .cards:hover {
+            cursor: pointer;
+        }
+
+            .cards:hover .images {
+                padding: 0px;
+            }
+
+
+
+            .cards:hover .name {
+                color: white;
+                border-bottom: 0.7px solid #ffbe33;
+            }
+
+            .cards:hover a.colors {
+                left: 25px;
+                color: #ffbe33;
+            }
+
+            .cards:hover a.detail {
+                left: 150px;
+                color: #ffbe33;
+            }
+
+            .cards:hover .bay .price p {
+                color: white;
+            }
+
+            .cards:hover .bay .cart a {
+                color: #ffbe33;
+                top: 0px;
+            }
+
+            .cards:hover .bay .number input {
+                background-color: white;
+                width: 40px;
+            }
+
+            .cards:hover .bay .price p.sale {
+                display: none;
+            }
+
+
+            .cards:hover .bay .price p.priceaftersale {
+                color: white;
+            }
+
+            .cards:hover .status p {
+                top: 17px;
+                color: green;
+                /* top:23px;
+                        color: green;
+                        background-color:white;
+                        border-radius:19px;*/
+            }
+
+            .cards:hover .feedbacks {
+                background-color: #40454d;
+            }
+
+            .cards:hover .writefeedback {
+                background-color: #40454d;
+                left: 60px;
+            }
+
+            .cards:hover .seefeedback {
+                background-color: #40454d;
+                top: -420px;
+            }
+
+    .images {
+        width: 100%;
+        border-radius: 15px;
+        padding: 2.5%;
+        transition: 0.5s;
+        height: 190px;
+    }
+
+        .images img {
+            width: 100%;
+            height: 100%;
+            border-radius: 15px;
+        }
+
+    .names {
+        margin-top: 10px;
+        width: 100%;
+        text-align: center;
+        display: flex;
+        justify-content: center;
+    }
+
+    .name {
+        font-size: 25px;
+        color: #ffffffa8;
+        width: fit-content;
+    }
+
+    .bay {
+        display: flex;
+        height: 57px;
+    }
+
+        .bay .price {
+            flex: 0 0 33%;
+        }
+
+            .bay .price p {
+                padding-top: 10px;
+                color: silver;
+                font-size: 20px;
+                font-weight: bold;
+            }
+
+                .bay .price p.priceaftersale {
+                    color: transparent;
+                }
+
+        .bay .cart {
+            flex: 0 0 33%;
+            position: relative;
+        }
+
+            .bay .cart a {
+                font-size: 30px;
+                color: transparent;
+                position: absolute;
+                left: 30px;
+                top: 60px;
+            }
+
+        .bay .number {
+            flex: 0 0 33%;
+            padding-top: 10px;
+        }
+
+            .bay .number input {
+                width: 10px;
+                border-radius: 7px;
+                text-align: center;
+                background-color: silver;
+                transition: 0.5s;
+            }
+
+    .color {
+        position: relative;
+        width: 100%;
+    }
+
+        .color a {
+            position: absolute;
+            left: 0px;
+            top: 0px;
+            transition: 0.5s;
+            color: transparent;
+        }
+
+    .product {
+        position: relative;
+        width: 100%;
+    }
+
+        .product a {
+            position: absolute;
+            left: 0px;
+            top: 0px;
+            transition: 0.5s;
+            color: transparent;
+        }
+
+    .status p {
+        position: relative;
+        top: 30px;
+        color: transparent;
+        transition: 0.5s;
+        font-weight: bold;
+    }
+
+    .feedbacks {
+        position: relative;
+        width: 60px;
+        height: 60px;
+        border-radius: 50%;
+        background-color: #40454dde;
+        top: -375px;
+        left: -20px;
+        padding: 5px;
+        text-align: center;
+        transition: 0.5s;
+        z-index: 2;
+    }
+
+        .feedbacks p {
+            color: white;
+            font-weight: bold;
+        }
+
+    .writefeedback {
+        position: relative;
+        width: 60px;
+        height: 60px;
+        background-color: transparent;
+        top: -435px;
+        left: -20px;
+        border-radius: 50%;
+        padding-top: 15px;
+        text-align: center;
+        transition: 0.5s;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+
+        .writefeedback p {
+            color: white;
+            font-weight: bold;
+        }
+
+    a.write {
+        color: white;
+    }
+
+    .writefeedback:hover a.write {
+        color: #ffbe33;
+    }
+
+    .seefeedback {
+        position: relative;
+        width: 60px;
+        height: 60px;
+        background-color: transparent;
+        top: -495px;
+        left: -20px;
+        border-radius: 50%;
+        padding-top: 15px;
+        text-align: center;
+        transition: 0.5s;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+
+        .seefeedback p {
+            color: white;
+            font-weight: bold;
+        }
+
+    a.write {
+        color: white;
+    }
+
+    .seefeedback:hover a.write {
+        color: #ffbe33;
+    }
+
+    p i .fa {
+        color: #ffbe33;
+        font-size: 25px;
+    }
+</style>

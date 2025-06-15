@@ -1,0 +1,66 @@
+﻿@model Card
+@{
+    ViewData["Title"] = "Editcard";
+    Layout = "~/Views/Shared/_HomeLoginLayout1.cshtml";
+}
+
+
+<hr />
+<div class="row" style="margin-left:200px">
+    <div class="col-md-4">
+        <form asp-action="Editcard">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <input type="hidden" asp-for="Id" />
+            <input type="hidden" asp-for="Userid" />
+            <div style="display:flex">
+                <div class="form-group" style="margin-left:15px;">
+                    <label asp-for="Cardnumber" class="control-label" style="margin-left:45px;"></label>
+                    <input asp-for="Cardnumber" class="form-control" style="width:178px;" />
+                    <span asp-validation-for="Cardnumber" class="text-danger"></span>
+                </div>
+
+                <div class="form-group" style="margin-left:15px;">
+                    <label asp-for="Cvv" class="control-label" style="margin-left:25px;"></label>
+                    <input asp-for="Cvv" class="form-control" style="width:100px;" />
+                    <span asp-validation-for="Cvv" class="text-danger"></span>
+                </div>
+
+                <div class="form-group" style="margin-left:15px;">
+                    <label asp-for="Balance" class="control-label" style="margin-left:25px;"></label>
+                    <input asp-for="Balance" class="form-control" style="width:100px;" />
+                    <span asp-validation-for="Balance" class="text-danger"></span>
+                </div>
+
+                <div class="form-group" style="margin-left:15px;">
+                    <label asp-for="Status" class="control-label" style="margin-left:25px;"></label>
+                    <input asp-for="Status" class="form-control" style="width:100px;" disabled />
+                    <span asp-validation-for="Status" class="text-danger"></span>
+                </div>
+                <div class="form-group" style="margin-left:70px;margin-top:20px">
+                    <a asp-action="addcart" asp-controller="Home" style="color:black">
+
+                        <i class="fa fa-backward" aria-hidden="true" style="margin-right:5px"></i>
+                        Back
+                    </a>
+                </div>
+
+
+                <div class="form-group" style="margin-left:15px;margin-top:20px">
+
+
+                    <input type="submit" value="Save" class="btn btn-primary" style="width:125px;height:50px;font-size:17px;margin-left:5px;border:none" />
+
+                </div>
+            </div>
+
+
+
+
+
+        </form>
+
+
+    </div>
+</div>
+
+

@@ -1,0 +1,75 @@
+﻿@model User
+@{
+    ViewData["Title"] = "Editprofile";
+    Layout = "~/Views/Shared/_HomeLoginLayout1.cshtml";
+
+}
+
+
+<hr />
+<div class="row" style="margin-left:200px">
+    <div class="col-md-4">
+        <form asp-action="Editprofile" enctype="multipart/form-data" style="display:flex">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <input type="hidden" asp-for="Id" />
+            <div>
+                <div class="form-group">
+                    <label asp-for="Fname" class="control-label"></label>
+                    <input asp-for="Fname" class="form-control" />
+                    <span asp-validation-for="Fname" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="Lname" class="control-label"></label>
+                    <input asp-for="Lname" class="form-control" />
+                    <span asp-validation-for="Lname" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="Birthdate" class="control-label"></label>
+                    <input asp-for="Birthdate" class="form-control" />
+                    <span asp-validation-for="Birthdate" class="text-danger"></span>
+                </div>
+            </div>
+            <div style="margin-left:50px">
+                <div class="form-group">
+                    <label asp-for="Adress" class="control-label"></label>
+                    <input asp-for="Adress" class="form-control" style="width:300px" />
+                    <span asp-validation-for="Adress" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="Phonenumber" class="control-label"></label>
+                    <input asp-for="Phonenumber" class="form-control" />
+                    <span asp-validation-for="Phonenumber" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="Email" class="control-label"></label>
+                    <input asp-for="Email" class="form-control" />
+                    <span asp-validation-for="Email" class="text-danger"></span>
+                </div>
+            </div>
+            <div style="margin-left:50px">
+                <div class="form-group">
+                    <label asp-for="Imagefile" class="control-label"></label>
+                    <input asp-for="Imagefile" class="form-control" style="width:300px" />
+                    <span asp-validation-for="Imagefile" class="text-danger"></span>
+                </div>
+                <div class="form-group" style="margin-top:100px;margin-left:75px;">
+                    <a asp-action="profile" asp-controller="Home" style="color:black">
+
+                        <i class="fa fa-backward" aria-hidden="true" style="margin-right:5px"></i>
+                        Back
+                    </a>
+
+                    <input type="submit" value="Save" class="btn btn-primary" style="width:125px;height:50px;font-size:17px;margin-left:5px;border:none" />
+
+                </div>
+
+
+            </div>
+
+
+        </form>
+
+
+    </div>
+</div>
+

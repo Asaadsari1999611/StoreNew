@@ -1,0 +1,51 @@
+﻿@model Product
+@{
+    ViewData["Title"] = "cart";
+    Layout = "~/Views/Shared/_HomeLoginLayout1.cshtml";
+}
+
+<div style="display:flex;justify-content:center;position:relative;">
+    <h3 style="background-color:red;width:fit-content;color:white;border-radius:5px;position:absolute;top:75px;">@ViewBag.productfound</h3>
+</div>
+
+
+<h5 style="text-align:center;margin-top:150px;margin-bottom:30px;">Enter the <span style="color:#ffbe33">Count</span>  of <span style="color:#ffbe33;font-weight:bold">@Model.Name</span> product you want </h5>
+@*@foreach(var item in Model)
+{
+    <p>item.Name</p>
+     <p>item.Price</p>
+    <p>item.Stochquntity</p>
+
+}*@
+@*<p>name : @Model.Name</p>
+
+*@
+<form class="signup-form" method="POST" style="text-align: center;
+    display: flex;
+    justify-content: center;margin-bottom:200px;">
+
+    <input name="productid" type="hidden" class="form-control" value="@Model.Id">
+    <input name="productcount" type="number" class="form-control inp" min="1" step="1" style="">
+
+    <button type="submit" class="form-control btn btn-primary submit px-3" style="width: 120px;
+
+    font-size: 24px;">
+        add cart
+    </button>
+</form>
+
+<style>
+    form input.form-control.inp {
+        width: 25px;
+        text-align: center;
+        margin-right: 54px;
+        transition: 0.5s;
+    }
+
+        form input.form-control.inp:hover {
+            background-color: black;
+            color: #ffbe33;
+            width: 100px;
+        }
+</style>
+

@@ -1,0 +1,899 @@
+﻿@{
+    ViewData["Title"] = "Home Page";
+}
+
+
+@*start check type user customer or gust*@
+@{
+    string typeuser = "";
+    if (@ViewBag.type == 0)
+        typeuser = "Gust";
+    else
+        typeuser = "Customer";
+
+}
+@*end check type user customer or gust*@
+
+
+
+
+@*start change layout*@
+@if (typeuser == "Customer")
+{
+    Layout = "~/Views/Shared/_HomeLoginLayout1.cshtml";
+
+}
+else if (typeuser == "Gust")
+{
+    Layout = "~/Views/Shared/_HomeLayout1.cshtml";
+
+}
+@*end change layout*@
+
+
+
+
+
+@*start notification for customer*@
+@if (typeuser == "Customer")
+{
+    <div style="position:fixed;top:30px;left:120px; width:250px;
+z-index:100;text-align:center;">
+        @if (@ViewBag.numnot == 0)
+        {
+            <i style="color:white;font-size:30px;" class="fa fa-bell" aria-hidden="true" onclick="viewnoti()"></i>
+
+        }
+        else
+        {
+            <i style="color:#ffbe33;font-size:30px;" class="fa fa-bell" aria-hidden="true" onclick="viewnoti()"></i>
+            <span class="num" style="position:relative;top:-5px;left:-25px;font-size:13px;font-weight:bold;">@ViewBag.numnot</span>
+
+        }
+        <div class="notification" id="not">
+            <div class="titl" style="font-weight:bold;font-size:17px">Notification</div>
+            @foreach (var not in @ViewBag.notification)
+            {
+                <div class="noti">
+                    @not.Payment @not.Arrive @not.Viewmessage @not.Message @not.Feedbackshare @not.Cardbalance @not.Changeinfcard
+                  @not.Orderstate  <div style="">@not.Datenoti</div>
+                </div>
+            }
+            @if (@ViewBag.numnot > 0)
+            {
+                <div class="clear">
+                    <a asp-action="clearnotification">Clear</a>
+                </div>
+            }
+            <hr />
+        </div>
+    </div>
+
+}
+<style>
+    .notification {
+        height: 100%;
+        background-color: whitesmoke;
+        border-radius: 7px;
+        display: none;
+    }
+
+    i.fa-bell:hover {
+        cursor: pointer;
+    }
+
+    span.num:hover {
+        cursor: pointer;
+    }
+
+    .clear.clear {
+        background-color: #ffbe33;
+        width: 50px;
+        border-radius: 7px;
+        margin-left: 100px;
+    }
+
+        .clear.clear:hover {
+            cursor: pointer;
+        }
+
+    .clear a {
+        text-decoration: none;
+        color: black;
+        font-weight: bold;
+    }
+
+    .noti {
+        background-color: black;
+        height: 50px;
+        margin: 10px;
+        margin-top: 10px;
+        color: white;
+        font-size: 13px;
+        font-weight: bold;
+        padding-top: 7px;
+        border-radius: 7px;
+    }
+</style>
+<script>
+    function viewnoti() {
+        var stat = document.getElementById('not').style.display;
+        if (stat == "none") {
+            document.getElementById('not').style.display = "block";
+        }
+        else
+            document.getElementById('not').style.display = "none";
+
+    }
+</script>
+@*end notification for customer*@
+
+
+
+
+
+@*start top 3 product for sale price*@
+<h1>@ViewBag.type</h1>
+<!-- rate section -->
+<section class="offer_section layout_padding-bottom">
+    <div class="offer_container">
+        <div class="container ">
+            <div class="heading_container heading_center">
+                <h2>
+                    Biggest Discounts
+                </h2>
+                <h5></h5>
+            </div>
+            <div class="row">
+                @foreach (var product2 in @ViewBag.topsaleproduct)
+                {
+                    <div class="col-md-6  ">
+                        <div class="box ">
+
+                            <div class="img-box">
+                                <img src=@Url.Content("~/images/"+product2.Imagepath)
+                                     asp-append-version="true" style="width:170px;height:170px;" />
+                            </div>
+
+
+                            <div class="detail-box">
+
+                                <h5>
+                                    @product2.Name
+                                </h5>
+
+
+                                <h6>
+
+                                    <span>@product2.Sale%</span>OFF
+
+                                </h6>
+
+                                @*start customer add cart from top product in sale*@
+                                @if (typeuser == "Customer")
+                                {
+                                    <a asp-action="cart" asp-controller="Home" asp-route-idproduct="@product2.Id">
+                                        Add To Cart
+                                        <svg version="1.1" id="Capa_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 456.029 456.029" style="enable-background:new 0 0 456.029 456.029;" xml:space="preserve">
+                                        <g>
+                                        <g>
+                                        <path d="M345.6,338.862c-29.184,0-53.248,23.552-53.248,53.248c0,29.184,23.552,53.248,53.248,53.248
+                     c29.184,0,53.248-23.552,53.248-53.248C398.336,362.926,374.784,338.862,345.6,338.862z" />
+                                                  </g>
+                                                </g>
+                                        <g>
+                                        <g>
+                                        <path d="M439.296,84.91c-1.024,0-2.56-0.512-4.096-0.512H112.64l-5.12-34.304C104.448,27.566,84.992,10.67,61.952,10.67H20.48
+                     C9.216,10.67,0,19.886,0,31.15c0,11.264,9.216,20.48,20.48,20.48h41.472c2.56,0,4.608,2.048,5.12,4.608l31.744,216.064
+                     c4.096,27.136,27.648,47.616,55.296,47.616h212.992c26.624,0,49.664-18.944,55.296-45.056l33.28-166.4
+                     C457.728,97.71,450.56,86.958,439.296,84.91z" />
+                                                  </g>
+                                                </g>
+                                        <g>
+                                        <g>
+                                        <path d="M215.04,389.55c-1.024-28.16-24.576-50.688-52.736-50.688c-29.696,1.536-52.224,26.112-51.2,55.296
+                     c1.024,28.16,24.064,50.688,52.224,50.688h1.024C193.536,443.31,216.576,418.734,215.04,389.55z" />
+                                                  </g>
+                                                </g>
+                                        <g>
+                                                </g>
+                                        <g>
+                                                </g>
+                                        <g>
+                                                </g>
+                                        <g>
+                                                </g>
+                                        <g>
+                                                </g>
+                                        <g>
+                                                </g>
+                                        <g>
+                                                </g>
+                                        <g>
+                                                </g>
+                                        <g>
+                                                </g>
+                                        <g>
+                                                </g>
+                                        <g>
+                                                </g>
+                                        <g>
+                                                </g>
+                                        <g>
+                                                </g>
+                                        <g>
+                                                </g>
+                                        <g>
+                                                </g>
+                                              </svg>
+                                    </a>
+                                }
+                                @*end customer add cart from top product in sale*@
+
+
+
+                                @*start go gust to login before dd cart from top product in sale*@
+                                else
+                                {
+
+                                    <a asp-action="Login" asp-controller="RigesterAndLogin">
+                                        Add To Cart
+                                        <svg version="1.1" id="Capa_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 456.029 456.029" style="enable-background:new 0 0 456.029 456.029;" xml:space="preserve">
+                                        <g>
+                                        <g>
+                                        <path d="M345.6,338.862c-29.184,0-53.248,23.552-53.248,53.248c0,29.184,23.552,53.248,53.248,53.248
+                     c29.184,0,53.248-23.552,53.248-53.248C398.336,362.926,374.784,338.862,345.6,338.862z" />
+                                                  </g>
+                                                </g>
+                                        <g>
+                                        <g>
+                                        <path d="M439.296,84.91c-1.024,0-2.56-0.512-4.096-0.512H112.64l-5.12-34.304C104.448,27.566,84.992,10.67,61.952,10.67H20.48
+                     C9.216,10.67,0,19.886,0,31.15c0,11.264,9.216,20.48,20.48,20.48h41.472c2.56,0,4.608,2.048,5.12,4.608l31.744,216.064
+                     c4.096,27.136,27.648,47.616,55.296,47.616h212.992c26.624,0,49.664-18.944,55.296-45.056l33.28-166.4
+                     C457.728,97.71,450.56,86.958,439.296,84.91z" />
+                                                  </g>
+                                                </g>
+                                        <g>
+                                        <g>
+                                        <path d="M215.04,389.55c-1.024-28.16-24.576-50.688-52.736-50.688c-29.696,1.536-52.224,26.112-51.2,55.296
+                     c1.024,28.16,24.064,50.688,52.224,50.688h1.024C193.536,443.31,216.576,418.734,215.04,389.55z" />
+                                                  </g>
+                                                </g>
+                                        <g>
+                                                </g>
+                                        <g>
+                                                </g>
+                                        <g>
+                                                </g>
+                                        <g>
+                                                </g>
+                                        <g>
+                                                </g>
+                                        <g>
+                                                </g>
+                                        <g>
+                                                </g>
+                                        <g>
+                                                </g>
+                                        <g>
+                                                </g>
+                                        <g>
+                                                </g>
+                                        <g>
+                                                </g>
+                                        <g>
+                                                </g>
+                                        <g>
+                                                </g>
+                                        <g>
+                                                </g>
+                                        <g>
+                                                </g>
+                                              </svg>
+                                    </a>
+                                }
+                                @*end go gust to login before dd cart from top product in sale*@
+
+
+                            </div>
+                        </div>
+                    </div>
+                }
+
+
+            </div>
+        </div>
+    </div>
+</section>
+@*start top 3 product for sale price*@
+
+
+
+
+@*start top 3 product for rate*@
+<section class="offer_section layout_padding-bottom">
+    <div class="offer_container">
+        <div class="container ">
+            <div class="heading_container heading_center">
+                <h2>
+                    Highst Rated Product
+                </h2>
+                <h5></h5>
+            </div>
+            <div class="row">
+                @foreach (var product2 in @ViewBag.topsevaluateproduct)
+                {
+                    <div class="col-md-6  ">
+                        <div class="box ">
+                            @foreach (var item in @ViewBag.allproductsinsite)
+                            {
+                                if (item.Id == product2.Productid)
+                                {
+                                    <div class="img-box">
+                                        <img src=@Url.Content("~/images/"+item.Imagepath)
+                                             asp-append-version="true" style="width:170px;height:170px;" />
+                                    </div>
+                                }
+
+                            }
+
+                            <div class="detail-box">
+                                @foreach (var item in @ViewBag.allproductsinsite)
+                                {
+                                    if (item.Id == product2.Productid)
+                                    {
+                                        <h5>
+                                            @item.Name
+                                        </h5>
+                                    }
+
+                                }
+                                @foreach (var item in @ViewBag.allproductsinsite)
+                                {
+                                    if (item.Id == product2.Productid)
+                                    {
+                                        <h6>
+
+                                            <span>@product2.Topevaluateforproduct /</span>
+                                            <span style="font-size:25px;">5</span>
+                                            <i class="fa fa-star" aria-hidden="true" style="font-size:25px;color:#ffbe33;margin-left:5px;"></i>
+                                        </h6>
+                                    }
+
+                                }
+
+
+
+                                @*start customer add cart from top product in rate*@
+                                @if (typeuser == "Customer")
+                                {
+                                    <a asp-action="cart" asp-controller="Home" asp-route-idproduct="@product2.Productid">
+                                        Add To Cart
+                                        <svg version="1.1" id="Capa_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 456.029 456.029" style="enable-background:new 0 0 456.029 456.029;" xml:space="preserve">
+                                        <g>
+                                        <g>
+                                        <path d="M345.6,338.862c-29.184,0-53.248,23.552-53.248,53.248c0,29.184,23.552,53.248,53.248,53.248
+                     c29.184,0,53.248-23.552,53.248-53.248C398.336,362.926,374.784,338.862,345.6,338.862z" />
+                                          </g>
+                                        </g>
+                                        <g>
+                                        <g>
+                                        <path d="M439.296,84.91c-1.024,0-2.56-0.512-4.096-0.512H112.64l-5.12-34.304C104.448,27.566,84.992,10.67,61.952,10.67H20.48
+                     C9.216,10.67,0,19.886,0,31.15c0,11.264,9.216,20.48,20.48,20.48h41.472c2.56,0,4.608,2.048,5.12,4.608l31.744,216.064
+                     c4.096,27.136,27.648,47.616,55.296,47.616h212.992c26.624,0,49.664-18.944,55.296-45.056l33.28-166.4
+                     C457.728,97.71,450.56,86.958,439.296,84.91z" />
+                                          </g>
+                                        </g>
+                                        <g>
+                                        <g>
+                                        <path d="M215.04,389.55c-1.024-28.16-24.576-50.688-52.736-50.688c-29.696,1.536-52.224,26.112-51.2,55.296
+                     c1.024,28.16,24.064,50.688,52.224,50.688h1.024C193.536,443.31,216.576,418.734,215.04,389.55z" />
+                                          </g>
+                                        </g>
+                                        <g>
+                                        </g>
+                                        <g>
+                                        </g>
+                                        <g>
+                                        </g>
+                                        <g>
+                                        </g>
+                                        <g>
+                                        </g>
+                                        <g>
+                                        </g>
+                                        <g>
+                                        </g>
+                                        <g>
+                                        </g>
+                                        <g>
+                                        </g>
+                                        <g>
+                                        </g>
+                                        <g>
+                                        </g>
+                                        <g>
+                                        </g>
+                                        <g>
+                                        </g>
+                                        <g>
+                                        </g>
+                                        <g>
+                                        </g>
+                                      </svg>
+                                    </a>
+                                }
+                                @*end customer add cart from top product in rate*@
+
+
+
+
+                                @*start gust go to login before add cart from top product in rate*@
+
+                                else
+                                {
+
+                                    <a asp-action="Login" asp-controller="RigesterAndLogin">
+                                        Add To Cart
+                                        <svg version="1.1" id="Capa_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 456.029 456.029" style="enable-background:new 0 0 456.029 456.029;" xml:space="preserve">
+                                        <g>
+                                        <g>
+                                        <path d="M345.6,338.862c-29.184,0-53.248,23.552-53.248,53.248c0,29.184,23.552,53.248,53.248,53.248
+                     c29.184,0,53.248-23.552,53.248-53.248C398.336,362.926,374.784,338.862,345.6,338.862z" />
+                                          </g>
+                                        </g>
+                                        <g>
+                                        <g>
+                                        <path d="M439.296,84.91c-1.024,0-2.56-0.512-4.096-0.512H112.64l-5.12-34.304C104.448,27.566,84.992,10.67,61.952,10.67H20.48
+                     C9.216,10.67,0,19.886,0,31.15c0,11.264,9.216,20.48,20.48,20.48h41.472c2.56,0,4.608,2.048,5.12,4.608l31.744,216.064
+                     c4.096,27.136,27.648,47.616,55.296,47.616h212.992c26.624,0,49.664-18.944,55.296-45.056l33.28-166.4
+                     C457.728,97.71,450.56,86.958,439.296,84.91z" />
+                                          </g>
+                                        </g>
+                                        <g>
+                                        <g>
+                                        <path d="M215.04,389.55c-1.024-28.16-24.576-50.688-52.736-50.688c-29.696,1.536-52.224,26.112-51.2,55.296
+                     c1.024,28.16,24.064,50.688,52.224,50.688h1.024C193.536,443.31,216.576,418.734,215.04,389.55z" />
+                                          </g>
+                                        </g>
+                                        <g>
+                                        </g>
+                                        <g>
+                                        </g>
+                                        <g>
+                                        </g>
+                                        <g>
+                                        </g>
+                                        <g>
+                                        </g>
+                                        <g>
+                                        </g>
+                                        <g>
+                                        </g>
+                                        <g>
+                                        </g>
+                                        <g>
+                                        </g>
+                                        <g>
+                                        </g>
+                                        <g>
+                                        </g>
+                                        <g>
+                                        </g>
+                                        <g>
+                                        </g>
+                                        <g>
+                                        </g>
+                                        <g>
+                                        </g>
+                                      </svg>
+                                    </a>
+                                }
+                                @*end gust go to login before add cart from top product in rate*@
+
+                            </div>
+                        </div>
+                    </div>
+                }
+
+
+            </div>
+        </div>
+    </div>
+</section>
+@*end top 3 product for rate*@
+
+
+
+
+
+
+
+@*start top 3 product for order*@
+<!-- rate  section -->
+<section class="offer_section layout_padding-bottom">
+    <div class="offer_container">
+        <div class="container ">
+            <div class="heading_container heading_center">
+                <h2>
+                    Most Sold Product
+                </h2>
+                <h5></h5>
+            </div>
+            <div class="row">
+                @foreach (var product in @ViewBag.topsnumorderproduct)
+                {
+                    <div class="col-md-6  ">
+                        <div class="box ">
+                            @foreach (var item in @ViewBag.allproductsinsite)
+                            {
+                                if (item.Id == product.Productid)
+                                {
+                                    <div class="img-box">
+                                        <img src=@Url.Content("~/images/"+item.Imagepath)
+                                             asp-append-version="true" style="width:170px;height:170px;" />
+                                    </div>
+                                }
+
+                            }
+
+                            <div class="detail-box">
+                                @foreach (var item in @ViewBag.allproductsinsite)
+                                {
+                                    if (item.Id == product.Productid)
+                                    {
+                                        <h5>
+                                            @item.Name
+                                        </h5>
+                                    }
+
+                                }
+                                @foreach (var item in @ViewBag.allproductsinsite)
+                                {
+                                    if (item.Id == product.Productid)
+                                    {
+                                        <h6>
+
+                                            <span>@product.Topnumorderforproduct </span>
+                                            <span style="font-size:25px;color:#ffbe33;">Orders</span>
+                                        </h6>
+                                    }
+
+                                }
+
+
+
+
+                                @*start customer add cart from top product in num order*@
+
+                                @if (typeuser == "Customer")
+                                {
+                                    <a asp-action="cart" asp-controller="Home" asp-route-idproduct="@product.Productid">
+                                        Add To Cart
+                                        <svg version="1.1" id="Capa_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 456.029 456.029" style="enable-background:new 0 0 456.029 456.029;" xml:space="preserve">
+                                        <g>
+                                        <g>
+                                        <path d="M345.6,338.862c-29.184,0-53.248,23.552-53.248,53.248c0,29.184,23.552,53.248,53.248,53.248
+                     c29.184,0,53.248-23.552,53.248-53.248C398.336,362.926,374.784,338.862,345.6,338.862z" />
+                                                  </g>
+                                                </g>
+                                        <g>
+                                        <g>
+                                        <path d="M439.296,84.91c-1.024,0-2.56-0.512-4.096-0.512H112.64l-5.12-34.304C104.448,27.566,84.992,10.67,61.952,10.67H20.48
+                     C9.216,10.67,0,19.886,0,31.15c0,11.264,9.216,20.48,20.48,20.48h41.472c2.56,0,4.608,2.048,5.12,4.608l31.744,216.064
+                     c4.096,27.136,27.648,47.616,55.296,47.616h212.992c26.624,0,49.664-18.944,55.296-45.056l33.28-166.4
+                     C457.728,97.71,450.56,86.958,439.296,84.91z" />
+                                                  </g>
+                                                </g>
+                                        <g>
+                                        <g>
+                                        <path d="M215.04,389.55c-1.024-28.16-24.576-50.688-52.736-50.688c-29.696,1.536-52.224,26.112-51.2,55.296
+                     c1.024,28.16,24.064,50.688,52.224,50.688h1.024C193.536,443.31,216.576,418.734,215.04,389.55z" />
+                                                  </g>
+                                                </g>
+                                        <g>
+                                                </g>
+                                        <g>
+                                                </g>
+                                        <g>
+                                                </g>
+                                        <g>
+                                                </g>
+                                        <g>
+                                                </g>
+                                        <g>
+                                                </g>
+                                        <g>
+                                                </g>
+                                        <g>
+                                                </g>
+                                        <g>
+                                                </g>
+                                        <g>
+                                                </g>
+                                        <g>
+                                                </g>
+                                        <g>
+                                                </g>
+                                        <g>
+                                                </g>
+                                        <g>
+                                                </g>
+                                        <g>
+                                                </g>
+                                              </svg>
+                                    </a>
+                                }
+                                @*end customer add cart from top product in num order*@
+
+
+
+                                @*start go gust to login before add cart from top product in num order*@
+
+                                else
+                                {
+
+                                    <a asp-action="Login" asp-controller="RigesterAndLoging">
+                                        Add To Cart
+                                        <svg version="1.1" id="Capa_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 456.029 456.029" style="enable-background:new 0 0 456.029 456.029;" xml:space="preserve">
+                                        <g>
+                                        <g>
+                                        <path d="M345.6,338.862c-29.184,0-53.248,23.552-53.248,53.248c0,29.184,23.552,53.248,53.248,53.248
+                     c29.184,0,53.248-23.552,53.248-53.248C398.336,362.926,374.784,338.862,345.6,338.862z" />
+                                                  </g>
+                                                </g>
+                                        <g>
+                                        <g>
+                                        <path d="M439.296,84.91c-1.024,0-2.56-0.512-4.096-0.512H112.64l-5.12-34.304C104.448,27.566,84.992,10.67,61.952,10.67H20.48
+                     C9.216,10.67,0,19.886,0,31.15c0,11.264,9.216,20.48,20.48,20.48h41.472c2.56,0,4.608,2.048,5.12,4.608l31.744,216.064
+                     c4.096,27.136,27.648,47.616,55.296,47.616h212.992c26.624,0,49.664-18.944,55.296-45.056l33.28-166.4
+                     C457.728,97.71,450.56,86.958,439.296,84.91z" />
+                                                  </g>
+                                                </g>
+                                        <g>
+                                        <g>
+                                        <path d="M215.04,389.55c-1.024-28.16-24.576-50.688-52.736-50.688c-29.696,1.536-52.224,26.112-51.2,55.296
+                     c1.024,28.16,24.064,50.688,52.224,50.688h1.024C193.536,443.31,216.576,418.734,215.04,389.55z" />
+                                                  </g>
+                                                </g>
+                                        <g>
+                                                </g>
+                                        <g>
+                                                </g>
+                                        <g>
+                                                </g>
+                                        <g>
+                                                </g>
+                                        <g>
+                                                </g>
+                                        <g>
+                                                </g>
+                                        <g>
+                                                </g>
+                                        <g>
+                                                </g>
+                                        <g>
+                                                </g>
+                                        <g>
+                                                </g>
+                                        <g>
+                                                </g>
+                                        <g>
+                                                </g>
+                                        <g>
+                                                </g>
+                                        <g>
+                                                </g>
+                                        <g>
+                                                </g>
+                                              </svg>
+                                    </a>
+                                }
+                                @*end go gust to login before add cart from top product in num order*@
+
+                            </div>
+                        </div>
+                    </div>
+                }
+
+
+            </div>
+        </div>
+    </div>
+</section>
+@*start top 3 product for order*@
+
+
+
+@*start top 3 customer for number order*@
+<section class="offer_section layout_padding-bottom">
+    <div class="offer_container">
+        <div class="container ">
+            <div class="heading_container heading_center">
+                <h2>
+                    Most Requested Customer
+                </h2>
+                <h5></h5>
+            </div>
+            <div class="row">
+                @foreach (var customer in @ViewBag.topsnumordercustomer)
+                {
+                    <div class="col-md-3  ">
+                        <div class="box " style="display:block;height:300px;">
+                            @foreach (var item in @ViewBag.allcustomerssinsite)
+                            {
+                                if (item.Id == customer.Userid)
+                                {
+                                    <div class="img-box" style="margin-left:25px;">
+                                        <img src=@Url.Content("~/images/"+item.Imagepath)
+                                             asp-append-version="true" style="width:170px;height:170px;" />
+                                    </div>
+
+                                }
+
+                            }
+
+                            <div class="detail-box" style="margin-top:5px;text-align:center;">
+
+                                @foreach (var item in @ViewBag.allcustomerssinsite)
+                                {
+                                    if (item.Id == customer.Userid)
+                                    {
+                                        <h5>
+                                            @item.Fname @item.Lname
+                                        </h5>
+                                        <h6>
+
+                                            <span>@customer.Topnumorderforcustomer </span>
+                                            <span style="font-size:25px;color:#ffbe33;margin-top:15px;">Orders</span>
+                                        </h6>
+                                    }
+
+                                }
+
+
+
+
+                            </div>
+                        </div>
+                    </div>
+                }
+
+
+            </div>
+        </div>
+    </div>
+</section>
+@*end top 3 customer for number order*@
+
+
+
+
+
+@*start top 3 customer for bay*@
+<section class="offer_section layout_padding-bottom">
+    <div class="offer_container">
+        <div class="container ">
+            <div class="heading_container heading_center">
+                <h2>
+                    Most Customer Bay
+                </h2>
+                <h5></h5>
+            </div>
+            <div class="row">
+                @foreach (var customer in @ViewBag.topbaycustomer)
+                {
+                    <div class="col-md-3  ">
+                        <div class="box " style="display:block;height:300px;">
+                            @foreach (var item in @ViewBag.allcustomerssinsite)
+                            {
+                                if (item.Id == customer.Userid)
+                                {
+                                    <div class="img-box" style="margin-left:25px;">
+                                        <img src=@Url.Content("~/images/"+item.Imagepath)
+                                             asp-append-version="true" style="width:170px;height:170px;" />
+                                    </div>
+
+                                }
+
+                            }
+
+                            <div class="detail-box" style="margin-top:5px;text-align:center;">
+
+                                @foreach (var item in @ViewBag.allcustomerssinsite)
+                                {
+                                    if (item.Id == customer.Userid)
+                                    {
+                                        <h5>
+                                            @item.Fname @item.Lname
+                                        </h5>
+                                        <h6>
+
+                                            <span>@customer.Topbayforcustomer </span>
+                                            <span style="font-size:25px;color:#ffbe33;margin-top:15px;">$</span>
+                                        </h6>
+                                    }
+
+                                }
+
+
+
+
+                            </div>
+                        </div>
+                    </div>
+                }
+
+
+            </div>
+        </div>
+    </div>
+</section>
+@*end top 3 customer for bay*@
+
+
+
+@*start  What Says Our Customers*@
+<section class="client_section layout_padding-bottom">
+    <div class="container">
+        <div class="heading_container heading_center psudo_white_primary mb_45">
+            <h2>
+                What Says Our Customers 
+            </h2>
+        </div>
+        <div class="carousel-wrap row ">
+
+            <div class="owl-carousel client_owl-carousel">
+          
+                @foreach (var feedback in @Model)
+                {
+                    
+                    <div class="item">
+                        <div class="box">
+                            <div class="detail-box">
+                                <p>
+                                    @feedback.Ratingdetails
+                                </p>
+                            
+                                @foreach (var user in @ViewBag.customers)
+                                {
+                                    if (feedback.Userid == user.Id)
+                                    {
+                                        <h6>
+                                            @user.Fname @user.Lname
+                                        </h6>
+                                        <p>
+                                            @user.Adress
+                                        </p>
+                                    }
+
+                                }
+
+                            </div>
+                            <div class="img-box">
+                                @foreach (var user in @ViewBag.customers)
+                                {
+                                    if (feedback.Userid == user.Id)
+                                    {
+                                        <img class="box-img" src=@Url.Content("~/images/"+user.Imagepath)
+                                             asp-append-version="true" style="width:100px;height:100px;" />
+                                    }
+
+                                }
+
+                            </div>
+                        </div>
+                    </div>
+
+                }
+            </div>
+        </div>
+    </div>
+</section>
+@*end What Says Our Customers*@
+
+
+
+
+<!-- end client section -->
+<!-- footer section -->

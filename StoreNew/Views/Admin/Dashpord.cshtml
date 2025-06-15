@@ -1,0 +1,110 @@
+﻿
+@{
+    ViewData["Title"] = "Dashpord";
+    Layout = "~/Views/Shared/_DashpordLayout.cshtml";
+}
+
+<h1>Dashpord</h1>
+<div class="row" style="margin-top:50px;">
+
+    <div class="col-md-12 grid-margin transparent">
+        <div class="row">
+            <div class="col-md-4 mb-4 stretch-card transparent">
+                <div style="background-color:#ef6c00" class="card card-tale">
+                    <div class="card-body">
+                        <p class="mb-4">Number Customer</p>
+                        <p class="fs-30 mb-2">@ViewBag.numberofcustomer</p>
+
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4 mb-4 stretch-card transparent">
+                <div style="background-color:#ffa000" class="card card-dark-blue">
+                    <div class="card-body">
+                        <p class="mb-4">Number Order</p>
+                        <p class="fs-30 mb-2">@ViewBag.numberoforder</p>
+
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4 mb-4  stretch-card transparent">
+                <div style="background-color:#ffbe33" class="card card-light-blue">
+                    <div class="card-body">
+                        <p class="mb-4">Total Store Income </p>
+                        <p class="fs-30 mb-2">@ViewBag.totalstoreincoma $</p>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row mt-4">
+
+            <div class="col-md-4 stretch-card transparent">
+                <div style="background-color:#151a22" class="card card-light-danger">
+                    <div class="card-body">
+                        <p class="mb-4">Number of Category</p>
+                        <p class="fs-30 mb-2">@ViewBag.numberofcategory</p>
+
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4 stretch-card transparent">
+                <div style="background-color:#222831d9" class="card card-light-danger">
+                    <div class="card-body">
+                        <p class="mb-4">Number of Products</p>
+                        <p class="fs-30 mb-2">@ViewBag.numberofproduct</p>
+
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4 stretch-card transparent">
+                <div style="background-color:#525356" class="card card-light-danger">
+                    <div class="card-body">
+                        <p class="mb-4">Number Of Feedbacks For Store </p>
+                        <p class="fs-30 mb-2">@ViewBag.numberfeedbackstore</p>
+
+
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row mt-4">
+
+            <div class="col-md-4 stretch-card transparent">
+                <div style="background-color:#ffc107b8" class="card card-tale">
+                    <div class="card-body">
+                        <p class="mb-4">Avarage Rating For Store</p>
+                        <p class="fs-30 mb-2">@ViewBag.avgfeedbackstore / 5</p>
+
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4 stretch-card transparent">
+                <div style="background-color:#475261" class="card card-tale">
+                    <div class="card-body">
+                        <p class="mb-4">Number Of Feedbacks For Product</p>
+                        <p class="fs-30 mb-2">@ViewBag.numberfeedbackproduct</p>
+
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4 stretch-card transparent">
+                <div style="background-color:#eac169" class="card card-tale">
+                    <div class="card-body">
+                        <p class="mb-4">Avarage Rating For Product</p>
+                        <p class="fs-30 mb-2">@ViewBag.avgfeedbackproduct / 5</p>
+
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<style>
+    div.card-body {
+        text-align: center;
+    }
+</style>
