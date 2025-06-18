@@ -8,10 +8,10 @@ namespace StoreNew
         public static void Main(string[] args)
         {
             var builder = WebApplication.CreateBuilder(args);
-
-            // Add services to the container.
+            
+                        // Add services to the container.
             builder.Services.AddControllersWithViews();
-            //connectiob batabase
+            //connectiob batabase locale
             builder.Services.AddDbContext<ModelContext>(options => options.UseOracle(builder.Configuration.GetConnectionString("DefaultConnection")));
             //runtimecompilation تعديل بدون رن جديد
             builder.Services.AddControllersWithViews().AddRazorRuntimeCompilation();
